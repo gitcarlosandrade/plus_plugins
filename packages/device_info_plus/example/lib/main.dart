@@ -52,6 +52,8 @@ class _MyAppState extends State<MyApp> {
           deviceData = _readLinuxDeviceInfo(await deviceInfoPlugin.linuxInfo);
         } else if (Platform.isMacOS) {
           deviceData = _readMacOsDeviceInfo(await deviceInfoPlugin.macOsInfo);
+        } else if (Platform.isWindows) {
+          deviceData = _readWindowsDeviceInfo(await deviceInfoPlugin.windowsInfo);
         }
       }
     } on PlatformException {
@@ -166,6 +168,12 @@ class _MyAppState extends State<MyApp> {
     };
   }
 
+  Map<String, dynamic> _readWindowsDeviceInfo(WindowsDeviceInfo data) {
+    return <String, dynamic>{
+      'nbrOfCores': data.nbrOfCores,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -182,7 +190,9 @@ class _MyAppState extends State<MyApp> {
                             ? 'Linux Device Info'
                             : Platform.isMacOS
                                 ? 'MacOS Device Info'
-                                : '',
+                                : Platform.isWindows
+                                  ? 'Windows Device Info'
+                                  : '',
           ),
         ),
         body: ListView(
