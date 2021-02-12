@@ -40,7 +40,7 @@ public class SharePlusPlugin implements FlutterPlugin, ActivityAware {
 
   @Override
   public void onAttachedToActivity(ActivityPluginBinding binding) {
-    share.setActivity(binding.getActivity());
+    setUpChannel(binding.getApplicationContext(), binding.getActivity(), binding.getBinaryMessenger());
   }
 
   @Override
